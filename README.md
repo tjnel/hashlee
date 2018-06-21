@@ -48,7 +48,7 @@ python hashlee.py directory/ -d
 
 #### Run against a file in verbose mode
 ```
-python hashlee.py directory/ -v
+python hashlee.py file.txt -v
 ```
 
 ## Usage Video

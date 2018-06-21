@@ -13,7 +13,7 @@ The goal of hashlee is to extract indicators from text and search for references
 
 ## Installing
 
-Running hashlee is easy just install requirements and point to a indicator, file or directory
+Running hashlee is easy just clone repo and point hashlee.py to an indicator, file or directory
 
 ### Prerequisites
 No prerequisites needed

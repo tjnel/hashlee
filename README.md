@@ -3,6 +3,14 @@
 ## Purpose
 The goal of hashlee is to extract indicators from text and search for references on osint
 
+## TODO List
+* Add Hash lookup functionality
+* Add API support
+* Convert IP / URL to API support
+* Add more sources
+* Implement save functionality
+* Implement config file support 
+
 ## Installing
 
 Running hashlee is easy just install requirements and point to a indicator, file or directory

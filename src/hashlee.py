@@ -25,6 +25,8 @@ def main():
     :return: Pass
     """
     # Variables
+    global HASHLEE_VERBOSE
+    global HASHLEE_SAVE
     input_files = []
 
     # Retrieve and build script arguments
@@ -65,7 +67,7 @@ def main():
             with open(f) as fp:
                 for line in fp:
                     if parse_for_indicators(line):
-                        log.info(" Found indicators in {}".format(line))
+                        log.info(" Found indicators in {}".format(line.rstrip()))
                     else:
                         log.info(" Unable to find indicators in file: {}".format(line))
     else:
@@ -110,6 +112,8 @@ def inspect_indicator(indicator, indicator_type):
         print("[POSSIBLE THREAT FOUND] {} on {}".format(indicator.replace(".","[.]"), results_parsed))
         return True
     else:
+        if HASHLEE_VERBOSE:
+            print("[NO THREAT FOUND] {}".format(indicator.replace(".", "[.]")))
         return False
 
 
@@ -153,7 +157,7 @@ def parse_for_indicators(line):
             else:
                 log.info(" Did not inspect {} or it has been inspected previously".format(md5))
     else:
-        log.info(" No MD5 found in line: {}".format(line))
+        log.info(" No MD5 found in line: {} ".format(line.rstrip()))
 
     sha1_list = re.findall(r'(?i)(?<![a-z0-9])[a-f0-9]{40}(?![a-z0-9])', line)
     if sha1_list:
@@ -165,7 +169,7 @@ def parse_for_indicators(line):
             else:
                 log.info(" Did not find results {} or it has been inspected previously".format(sha1))
     else:
-        log.info(" No SHA1 found in line: {}".format(line))
+        log.info(" No SHA1 found in line: {}".format(line.rstrip()))
 
     ip_list = re.findall(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', line)
     if ip_list:
@@ -177,7 +181,7 @@ def parse_for_indicators(line):
             else:
                 log.info(" Did not inspect {} or it has been inspected previously".format(ip))
     else:
-        log.info(" No IP found in line: {}".format(line))
+        log.info(" No IP found in line: {}".format(line.rstrip()))
 
     url_list = re.findall(r'(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', line)
     if url_list:
@@ -189,8 +193,13 @@ def parse_for_indicators(line):
                 log.info(" RESULTS FOUND: {} [Adding to results]".format(url))
             else:
                 log.info(" Did not inspect {} or it has been inspected previously".format(url))
+                if HASHLEE_VERBOSE:
+                    if url in CHECKED_INDICATORS:
+                        print("[INDICATOR PREVIOUSLY CHECKED] {}".format(url.replace(".", "[.]")))
+                    else:
+                        print("[NO THREAT REFENCE FOUND] {}".format(url.replace(".", "[.]")))
     else:
-        log.info(" No URL found in line: {}".format(line))
+        log.info(" No URL found in line: {}".format(line.rstrip()))
 
     # Return whether we were able to pull indicators or not
     if indicators_present == True:

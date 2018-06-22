@@ -53,7 +53,7 @@ python hashlee.py file.txt -v
 
 ## Usage Video
 
-[https://youtu.be/](https://youtu.be/)
+[https://youtu.be/_nU_VpoatHo](https://youtu.be/_nU_VpoatHo)
 
 ## Built With
 
